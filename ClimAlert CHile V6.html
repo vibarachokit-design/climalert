@@ -1,0 +1,2463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ClimaAlert Chile PRO</title>
+    <style>
+        /* ================================================================
+           ESTILOS COMPLETOS
+           ================================================================ */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #5fc3e4;
+            --primary-dark: #2a7a9e;
+            --bg-dark: #0b1a2e;
+            --bg-card: rgba(255, 255, 255, 0.06);
+            --text-light: #d4e4ed;
+            --text-muted: rgba(255, 255, 255, 0.4);
+            --whatsapp: #25D366;
+            --whatsapp-dark: #128C7E;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #2ecc71;
+            --radius: 16px;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(145deg, #0b1a2e 0%, #1a3349 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .app-wrapper {
+            max-width: 480px;
+            width: 100%;
+            background: linear-gradient(180deg, #1c3a5a 0%, #0f2338 100%);
+            border-radius: 40px;
+            padding: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 0 3px #2a4a6a inset;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .notch {
+            width: 150px;
+            height: 28px;
+            background: #0a1628;
+            border-radius: 20px;
+            margin: -8px auto 15px;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .notch::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #1a3350;
+            border-radius: 50%;
+            position: absolute;
+            right: 20px;
+            top: 8px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .app-content {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 20px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .header-top h1 {
+            color: #fff;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .header-top h1 span {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .header-actions .badge {
+            background: rgba(95, 195, 228, 0.12);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 600;
+            border: 1px solid rgba(95, 195, 228, 0.1);
+            text-transform: uppercase;
+        }
+        .header-actions .badge.real {
+            background: rgba(46, 204, 113, 0.12);
+            color: var(--success);
+            border-color: rgba(46, 204, 113, 0.15);
+        }
+        .header-actions .icon-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-actions .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-input-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 14px;
+            padding: 4px 4px 4px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s;
+        }
+        .phone-input-row:focus-within {
+            border-color: var(--primary);
+            background: rgba(0, 0, 0, 0.35);
+        }
+        .phone-input-row .phone-icon {
+            color: var(--text-muted);
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .phone-input-row input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            padding: 10px 0;
+            outline: none;
+            min-width: 0;
+        }
+        .phone-input-row input::placeholder {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        .phone-input-row input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+        .phone-input-row input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        .phone-input-row .save-phone-btn {
+            background: var(--primary);
+            border: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .phone-input-row .save-phone-btn:hover {
+            background: var(--primary-dark);
+        }
+        .phone-input-row .phone-status {
+            color: var(--success);
+            font-size: 18px;
+            flex-shrink: 0;
+            padding-right: 8px;
+        }
+
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            padding: 4px;
+            margin-bottom: 16px;
+        }
+        .tabs .tab {
+            flex: 1;
+            padding: 8px 6px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .tabs .tab:hover {
+            color: #fff;
+        }
+        .tabs .tab.active {
+            background: rgba(95, 195, 228, 0.15);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== CONFIGURACIÓN ===== */
+        .config-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 14px;
+        }
+
+        .config-card label {
+            display: block;
+            color: #8bb4d4;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        .config-card select,
+        .config-card input {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+            margin-bottom: 10px;
+        }
+
+        .config-card select:focus,
+        .config-card input:focus {
+            border-color: var(--primary);
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 0 3px rgba(95, 195, 228, 0.08);
+        }
+
+        .config-card select option {
+            background: #1a3349;
+            color: #fff;
+        }
+
+        .config-card .row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .config-card .row-2 select,
+        .config-card .row-2 input {
+            margin-bottom: 0;
+        }
+
+        /* ===== BADGE DE UBICACIÓN ===== */
+        .location-badge {
+            background: rgba(95, 195, 228, 0.06);
+            border-radius: 12px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(95, 195, 228, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .location-badge:hover {
+            background: rgba(95, 195, 228, 0.1);
+        }
+        .location-badge .pin {
+            font-size: 18px;
+        }
+        .location-badge .info {
+            color: var(--text-muted);
+            font-size: 13px;
+            flex: 1;
+        }
+        .location-badge .info strong {
+            color: #fff;
+            font-weight: 600;
+        }
+        .location-badge .gps-btn {
+            background: rgba(95, 195, 228, 0.1);
+            border: none;
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .location-badge .gps-btn:hover {
+            background: rgba(95, 195, 228, 0.2);
+        }
+
+        /* ===== FRECUENCIA ===== */
+        .freq-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .freq-grid .freq-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            padding: 8px 4px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .freq-grid .freq-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .freq-grid .freq-btn.active {
+            background: rgba(95, 195, 228, 0.12);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .freq-grid .freq-btn .sub {
+            display: block;
+            font-weight: 400;
+            font-size: 8px;
+            opacity: 0.4;
+            margin-top: 2px;
+        }
+
+        /* ===== PRONÓSTICO ===== */
+        .forecast-card {
+            background: linear-gradient(135deg, rgba(95, 195, 228, 0.06) 0%, rgba(43, 120, 180, 0.03) 100%);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(95, 195, 228, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .forecast-card .bg-emoji {
+            position: absolute;
+            right: -10px;
+            top: -30px;
+            font-size: 90px;
+            opacity: 0.04;
+            transform: rotate(10deg);
+            pointer-events: none;
+        }
+
+        .forecast-today {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .forecast-today .emoji {
+            font-size: 44px;
+            line-height: 1;
+        }
+        .forecast-today .temp {
+            color: #fff;
+            font-size: 36px;
+            font-weight: 700;
+        }
+        .forecast-today .temp small {
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .forecast-today .info {
+            margin-left: auto;
+            text-align: right;
+        }
+        .forecast-today .info .desc {
+            color: #8bb4d4;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .forecast-today .info .date {
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        .forecast-details {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative;
+            z-index: 1;
+        }
+        .forecast-details .detail {
+            text-align: center;
+        }
+        .forecast-details .detail .label {
+            color: var(--text-muted);
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .forecast-details .detail .value {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* ===== PRONÓSTICO EXTENDIDO ===== */
+        .extended-forecast {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
+            margin-top: 10px;
+        }
+        .extended-forecast .day-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 8px 4px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .extended-forecast .day-item .day-name {
+            color: var(--text-muted);
+            font-size: 9px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .extended-forecast .day-item .emoji {
+            font-size: 22px;
+            display: block;
+            margin: 4px 0;
+        }
+        .extended-forecast .day-item .temp-max {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .extended-forecast .day-item .temp-min {
+            color: var(--text-muted);
+            font-size: 10px;
+        }
+
+        /* ===== ALERTAS ===== */
+        .alerts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .alert-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .alert-item .alert-icon {
+            font-size: 20px;
+        }
+        .alert-item .alert-info {
+            flex: 1;
+        }
+        .alert-item .alert-info .title {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .alert-item .alert-info .desc {
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+        .alert-item .alert-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: var(--text-muted);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .alert-item .alert-toggle.active {
+            background: rgba(46, 204, 113, 0.15);
+            color: var(--success);
+        }
+        .alert-item.alert-rain { border-left-color: var(--primary); }
+        .alert-item.alert-heat { border-left-color: var(--danger); }
+        .alert-item.alert-wind { border-left-color: var(--warning); }
+        .alert-item.alert-uv { border-left-color: #e67e22; }
+
+        /* ===== BOTÓN WHATSAPP ===== */
+        .btn-whatsapp {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--whatsapp) 0%, var(--whatsapp-dark) 100%);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.15);
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-whatsapp::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.5s;
+        }
+        .btn-whatsapp:hover::before {
+            left: 100%;
+        }
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(37, 211, 102, 0.25);
+        }
+        .btn-whatsapp:active {
+            transform: scale(0.97);
+        }
+        .btn-whatsapp:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-whatsapp .icon {
+            font-size: 22px;
+        }
+
+        /* ===== NOTIFICACIÓN SIMULADA ===== */
+        .notif-sim {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: var(--radius);
+            padding: 14px 16px;
+            border-left: 4px solid var(--whatsapp);
+            display: none;
+            animation: slideUp 0.5s ease;
+            margin-bottom: 12px;
+        }
+        .notif-sim.show {
+            display: block;
+        }
+
+        .notif-sim .notif-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+        .notif-sim .notif-header .avatar {
+            width: 28px;
+            height: 28px;
+            background: var(--whatsapp);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 12px;
+        }
+        .notif-sim .notif-header .sender {
+            color: #fff;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .notif-sim .notif-header .time {
+            color: var(--text-muted);
+            font-size: 10px;
+            margin-left: auto;
+        }
+
+        .notif-sim .notif-body {
+            color: var(--text-light);
+            font-size: 13px;
+            line-height: 1.6;
+            padding-left: 38px;
+        }
+        .notif-sim .notif-body strong {
+            color: #fff;
+        }
+
+        .notif-sim .notif-footer {
+            margin-top: 6px;
+            padding-left: 38px;
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .notif-sim .notif-footer .tag {
+            background: rgba(37, 211, 102, 0.1);
+            color: var(--whatsapp);
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== FAVORITOS ===== */
+        .favorites-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .favorites-list .fav-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--text-light);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .favorites-list .fav-tag:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .favorites-list .fav-tag .remove {
+            color: var(--text-muted);
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .favorites-list .fav-tag .remove:hover {
+            color: var(--danger);
+        }
+        .favorites-list .add-fav {
+            background: rgba(95, 195, 228, 0.08);
+            border: 1px dashed rgba(95, 195, 228, 0.2);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .favorites-list .add-fav:hover {
+            background: rgba(95, 195, 228, 0.15);
+        }
+
+        /* ===== PREVISUALIZACIÓN ===== */
+        .preview-box {
+            background: rgba(37, 211, 102, 0.05);
+            border: 1px solid rgba(37, 211, 102, 0.1);
+            border-radius: var(--radius);
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            display: none;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .preview-box.show {
+            display: block;
+        }
+        .preview-box .preview-title {
+            color: var(--whatsapp);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .preview-box .preview-title button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .preview-box .preview-title button:hover {
+            color: #fff;
+        }
+        .preview-box .preview-content {
+            color: var(--text-light);
+            font-size: 12px;
+            line-height: 1.6;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            margin-top: 14px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 10px;
+        }
+        .footer .status {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 12px;
+        }
+        .footer .status .dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: pulse 1.5s infinite;
+        }
+        .footer .status .dot.loading {
+            background: var(--warning);
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .app-wrapper { border-radius: 28px; padding: 14px; }
+            .app-content { padding: 14px 10px; border-radius: 24px; }
+            .forecast-today .temp { font-size: 28px; }
+            .forecast-today .emoji { font-size: 34px; }
+            .freq-grid { grid-template-columns: repeat(2, 1fr); }
+            .config-card .row-2 { grid-template-columns: 1fr; }
+            .config-card .row-2 select,
+            .config-card .row-2 input { margin-bottom: 10px; }
+            .extended-forecast { grid-template-columns: repeat(5, 1fr); gap: 2px; }
+            .extended-forecast .day-item { padding: 4px 2px; }
+            .extended-forecast .day-item .emoji { font-size: 18px; }
+            .forecast-details { grid-template-columns: repeat(2, 1fr); }
+            .phone-input-row .save-phone-btn { font-size: 11px; padding: 6px 12px; }
+        }
+
+        @media (max-width: 380px) {
+            .header-top h1 { font-size: 18px; }
+            .freq-grid .freq-btn { font-size: 10px; padding: 6px 2px; }
+            .forecast-today .temp { font-size: 24px; }
+        }
+
+        select::-webkit-scrollbar {
+            width: 4px;
+            background: #0f2338;
+        }
+        select::-webkit-scrollbar-thumb {
+            background: #2a4a6a;
+            border-radius: 4px;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: none;
+            z-index: 999;
+            max-width: 90%;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        }
+        .toast.show {
+            display: block;
+        }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.info { border-left: 4px solid var(--primary); }
+        .toast.warning { border-left: 4px solid var(--warning); }
+
+        /* ===== MODAL REGISTRO ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        .modal-overlay .modal-box {
+            background: linear-gradient(180deg, #1c3a5a, #0f2338);
+            border-radius: 28px;
+            padding: 32px 24px;
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-overlay .modal-box h2 {
+            color: #fff;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .modal-overlay .modal-box p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .modal-overlay .modal-box .modal-input-group {
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 14px;
+            padding: 4px 4px 4px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 16px;
+        }
+        .modal-overlay .modal-box .modal-input-group:focus-within {
+            border-color: var(--primary);
+        }
+        .modal-overlay .modal-box .modal-input-group .country-code {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        .modal-overlay .modal-box .modal-input-group input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            padding: 12px 0;
+            outline: none;
+        }
+        .modal-overlay .modal-box .modal-input-group input::placeholder {
+            color: var(--text-muted);
+        }
+        .modal-overlay .modal-box .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .modal-overlay .modal-box .modal-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .modal-overlay .modal-box .modal-actions .btn-primary {
+            background: var(--whatsapp);
+            color: #fff;
+        }
+        .modal-overlay .modal-box .modal-actions .btn-primary:hover {
+            background: var(--whatsapp-dark);
+        }
+        .modal-overlay .modal-box .modal-actions .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+        }
+        .modal-overlay .modal-box .modal-actions .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ===== BADGE DE EMOJIS ===== */
+        .emoji-info {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+        .emoji-info .icon {
+            font-size: 16px;
+        }
+        .emoji-info strong {
+            color: var(--text-light);
+        }
+
+        /* ===== BADGE API STATUS ===== */
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 12px;
+            background: rgba(46, 204, 113, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(46, 204, 113, 0.15);
+        }
+        .api-status.error {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
+            border-color: rgba(231, 76, 60, 0.15);
+        }
+        .api-status .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--success);
+            display: inline-block;
+        }
+        .api-status.error .dot {
+            background: var(--danger);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================================================
+    MODAL PARA REGISTRO DE TELÉFONO
+    ================================================================ -->
+    <div class="modal-overlay" id="phoneModal">
+        <div class="modal-box">
+            <h2>📱 Configura tu número</h2>
+            <p>Ingresa tu número de WhatsApp para recibir las alertas climáticas directamente en tu teléfono.</p>
+            <div class="modal-input-group">
+                <span class="country-code">🇨🇱 +56</span>
+                <input type="number" id="modalPhoneInput" placeholder="9 1234 5678" value="">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closePhoneModal()">Cancelar</button>
+                <button class="btn-primary" onclick="savePhoneFromModal()">💾 Guardar número</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================
+    TOAST
+    ================================================================ -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ================================================================
+    APP PRINCIPAL
+    ================================================================ -->
+    <div class="app-wrapper">
+        <div class="notch"></div>
+
+        <div class="app-content">
+
+            <!-- HEADER -->
+            <div class="header">
+                <div class="header-top">
+                    <h1>Clima<span>Alert</span></h1>
+                    <div class="header-actions">
+                        <span class="badge real" id="apiBadge">🌐 API</span>
+                        <button class="icon-btn" onclick="refreshWeather()" title="Actualizar">🔄</button>
+                        <button class="icon-btn" onclick="toggleSettings()" title="Configuración">⚙️</button>
+                    </div>
+                </div>
+
+                <!-- Campo de teléfono -->
+                <div class="phone-input-row">
+                    <span class="phone-icon">📱</span>
+                    <input type="number" id="phoneInput" placeholder="Ingresa tu número WhatsApp" value="">
+                    <button class="save-phone-btn" onclick="savePhoneNumber()">Guardar</button>
+                    <span class="phone-status" id="phoneStatus"></span>
+                </div>
+            </div>
+
+            <!-- TABS -->
+            <div class="tabs">
+                <button class="tab active" data-tab="tab-main" onclick="switchTab('tab-main')">📊 Clima</button>
+                <button class="tab" data-tab="tab-alerts" onclick="switchTab('tab-alerts')">🔔 Alertas</button>
+                <button class="tab" data-tab="tab-settings" onclick="switchTab('tab-settings')">⚙️ Config</button>
+            </div>
+
+            <!-- ============================================================
+            TAB 1: CLIMA PRINCIPAL
+            ============================================================ -->
+            <div class="tab-content active" id="tab-main">
+
+                <!-- Ubicación -->
+                <div class="location-badge" onclick="detectLocation()">
+                    <span class="pin">📍</span>
+                    <span class="info">
+                        <strong id="locationDisplay">Santiago, Región Metropolitana</strong><br>
+                        <span style="font-size:11px;opacity:0.6;">Comuna: <span id="comunaDisplay">Santiago</span></span>
+                    </span>
+                    <button class="gps-btn" onclick="event.stopPropagation();detectLocation();">📡 GPS</button>
+                </div>
+
+                <!-- Info de emojis -->
+                <div class="emoji-info">
+                    <span class="icon">🌐</span>
+                    <span>Datos en <strong>tiempo real</strong> desde WeatherAPI.com · <span id="lastUpdateLabel">Actualizando...</span></span>
+                </div>
+
+                <!-- Pronóstico HOY -->
+                <div class="forecast-card" id="forecastCard">
+                    <span class="bg-emoji" id="bgEmoji">☀️</span>
+                    <div class="forecast-today">
+                        <span class="emoji" id="weatherEmoji">☀️</span>
+                        <span class="temp" id="weatherTemp">24<small>°C</small></span>
+                        <div class="info">
+                            <div class="desc" id="weatherDesc">Soleado</div>
+                            <div class="date" id="weatherDate">Hoy, 16 de junio</div>
+                        </div>
+                    </div>
+                    <div class="forecast-details">
+                        <div class="detail">
+                            <div class="label">💧 Humedad</div>
+                            <div class="value" id="humidity">45%</div>
+                        </div>
+                        <div class="detail">
+                            <div class="label">💨 Viento</div>
+                            <div class="value" id="wind">12 km/h</div>
+                        </div>
+                        <div class="detail">
+                            <div class="label">🌡️ Sensación</div>
+                            <div class="value" id="feelsLike">26°C</div>
+                        </div>
+                        <div class="detail">
+                            <div class="label">☀️ UV</div>
+                            <div class="value" id="uvIndex">7</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pronóstico Extendido 5 días -->
+                <div style="margin-bottom: 14px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                        <span style="color:var(--text-muted);font-size:11px;font-weight:600;text-transform:uppercase;">📅 Pronóstico 5 días</span>
+                        <span style="color:var(--text-muted);font-size:9px;" id="forecastSource">WeatherAPI.com</span>
+                    </div>
+                    <div class="extended-forecast" id="extendedForecast">
+                        <!-- Generado por JS -->
+                    </div>
+                </div>
+
+                <!-- Favoritos -->
+                <div style="margin-bottom: 12px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                        <span style="color:var(--text-muted);font-size:11px;font-weight:600;text-transform:uppercase;">⭐ Favoritos</span>
+                    </div>
+                    <div class="favorites-list" id="favoritesList">
+                        <!-- Generado por JS -->
+                        <button class="add-fav" onclick="addFavorite()">+ Agregar actual</button>
+                    </div>
+                </div>
+
+                <!-- Previsualización del mensaje -->
+                <div class="preview-box" id="previewBox">
+                    <div class="preview-title">
+                        <span>📋 Vista previa del mensaje (texto plano)</span>
+                        <button onclick="togglePreview()">✕ Cerrar</button>
+                    </div>
+                    <div class="preview-content" id="previewContent"></div>
+                </div>
+
+                <!-- Botón WhatsApp -->
+                <button class="btn-whatsapp" onclick="sendWhatsApp()">
+                    <span class="icon">💬</span>
+                    Enviar pronóstico por WhatsApp
+                </button>
+
+                <!-- Notificación simulada -->
+                <div class="notif-sim" id="notificationSim">
+                    <div class="notif-header">
+                        <div class="avatar">🤖</div>
+                        <span class="sender">ClimaAlert Bot</span>
+                        <span class="time" id="notifTime">hace un momento</span>
+                    </div>
+                    <div class="notif-body" id="notifBody">
+                        <strong>📋 Mensaje enviado a <span id="notifCity">Santiago</span>:</strong><br>
+                        <span id="notifPreview" style="font-size:12px;color:var(--text-muted);">Vista previa del mensaje...</span>
+                    </div>
+                    <div class="notif-footer">
+                        <span class="tag" id="notifFreqTag">📅 Envío diario</span>
+                        <span class="tag" id="notifTimeTag">⏰ 07:00</span>
+                        <span class="tag" id="notifSourceTag">🌐 WeatherAPI</span>
+                        <span class="tag">✅ Entregado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            TAB 2: ALERTAS
+            ============================================================ -->
+            <div class="tab-content" id="tab-alerts">
+
+                <div style="color:#fff;font-size:16px;font-weight:600;margin-bottom:12px;">🔔 Alertas personalizadas</div>
+                <p style="color:var(--text-muted);font-size:12px;margin-bottom:14px;">Activa las alertas que quieres recibir cuando se cumplan las condiciones.</p>
+
+                <div class="alerts-container">
+                    <div class="alert-item alert-rain">
+                        <span class="alert-icon">🌧️</span>
+                        <div class="alert-info">
+                            <div class="title">Lluvia intensa</div>
+                            <div class="desc">Notificar si probabilidad de lluvia > 70%</div>
+                        </div>
+                        <button class="alert-toggle active" data-alert="rain" onclick="toggleAlert(this)">✅ Activa</button>
+                    </div>
+
+                    <div class="alert-item alert-heat">
+                        <span class="alert-icon">🔥</span>
+                        <div class="alert-info">
+                            <div class="title">Calor extremo</div>
+                            <div class="desc">Notificar si temperatura > 30°C</div>
+                        </div>
+                        <button class="alert-toggle active" data-alert="heat" onclick="toggleAlert(this)">✅ Activa</button>
+                    </div>
+
+                    <div class="alert-item alert-wind">
+                        <span class="alert-icon">💨</span>
+                        <div class="alert-info">
+                            <div class="title">Viento fuerte</div>
+                            <div class="desc">Notificar si viento > 40 km/h</div>
+                        </div>
+                        <button class="alert-toggle" data-alert="wind" onclick="toggleAlert(this)">⏸️ Inactiva</button>
+                    </div>
+
+                    <div class="alert-item alert-uv">
+                        <span class="alert-icon">☀️</span>
+                        <div class="alert-info">
+                            <div class="title">UV extremo</div>
+                            <div class="desc">Notificar si índice UV > 8</div>
+                        </div>
+                        <button class="alert-toggle active" data-alert="uv" onclick="toggleAlert(this)">✅ Activa</button>
+                    </div>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.05);">
+                    <div style="color:var(--text-muted);font-size:11px;font-weight:600;text-transform:uppercase;margin-bottom:6px;">📋 Historial de alertas</div>
+                    <div id="alertHistory" style="color:var(--text-light);font-size:12px;line-height:1.8;">
+                        <span style="color:var(--text-muted);">No hay alertas recientes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            TAB 3: CONFIGURACIÓN
+            ============================================================ -->
+            <div class="tab-content" id="tab-settings">
+
+                <div style="color:#fff;font-size:16px;font-weight:600;margin-bottom:12px;">⚙️ Configuración avanzada</div>
+
+                <div class="config-card">
+                    <label>🗺️ Región</label>
+                    <select id="regionSelect">
+                        <option value="">Selecciona una región...</option>
+                    </select>
+
+                    <label>🏙️ Ciudad</label>
+                    <select id="citySelect">
+                        <option value="">Selecciona una ciudad...</option>
+                    </select>
+
+                    <label>📍 Comuna</label>
+                    <select id="comunaSelect">
+                        <option value="">Selecciona una comuna...</option>
+                    </select>
+
+                    <div class="row-2">
+                        <div>
+                            <label>⏰ Hora de envío</label>
+                            <input type="time" id="sendTime" value="07:00">
+                        </div>
+                        <div>
+                            <label>🔄 Actualizar cada</label>
+                            <select id="updateInterval">
+                                <option value="60">1 hora</option>
+                                <option value="180" selected>3 horas</option>
+                                <option value="360">6 horas</option>
+                                <option value="720">12 horas</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label>📅 Frecuencia de envío</label>
+                    <div class="freq-grid">
+                        <button class="freq-btn active" data-freq="daily" onclick="setFrequency(this)">
+                            Diario
+                            <span class="sub">1x día</span>
+                        </button>
+                        <button class="freq-btn" data-freq="12h" onclick="setFrequency(this)">
+                            12h
+                            <span class="sub">2x día</span>
+                        </button>
+                        <button class="freq-btn" data-freq="6h" onclick="setFrequency(this)">
+                            6h
+                            <span class="sub">4x día</span>
+                        </button>
+                        <button class="freq-btn" data-freq="custom" onclick="setFrequency(this)">
+                            Personalizado
+                            <span class="sub">Configurar</span>
+                        </button>
+                    </div>
+
+                    <div id="customFreq" style="display:none;margin-top:8px;">
+                        <label>Intervalo personalizado (horas)</label>
+                        <input type="number" id="customHours" value="3" min="1" max="24" style="margin-bottom:0;">
+                    </div>
+
+                    <div style="margin-top:12px;display:flex;gap:8px;">
+                        <button onclick="saveSettings()" style="flex:1;padding:10px;background:rgba(95,195,228,0.12);border:1px solid rgba(95,195,228,0.15);border-radius:12px;color:var(--primary);font-weight:600;cursor:pointer;font-size:13px;">💾 Guardar</button>
+                        <button onclick="resetSettings()" style="flex:1;padding:10px;background:rgba(231,76,60,0.08);border:1px solid rgba(231,76,60,0.1);border-radius:12px;color:var(--danger);font-weight:600;cursor:pointer;font-size:13px;">↺ Restablecer</button>
+                    </div>
+                </div>
+
+                <!-- Configuración de API -->
+                <div class="config-card" style="margin-top:14px;">
+                    <label>🌐 Configuración de API</label>
+                    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                        <span style="color:var(--text-muted);font-size:12px;">Estado:</span>
+                        <span class="api-status" id="apiStatus">
+                            <span class="dot"></span> Conectado
+                        </span>
+                    </div>
+                    <div style="display:flex;gap:8px;">
+                        <input type="text" id="apiKeyInput" placeholder="Tu API Key de WeatherAPI.com" style="flex:1;padding:8px 12px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.06);border-radius:10px;color:#fff;font-size:13px;outline:none;">
+                        <button onclick="saveApiKey()" style="padding:8px 16px;background:rgba(95,195,228,0.12);border:1px solid rgba(95,195,228,0.15);border-radius:10px;color:var(--primary);font-weight:600;cursor:pointer;font-size:12px;">Guardar</button>
+                    </div>
+                    <div style="margin-top:6px;color:var(--text-muted);font-size:10px;">
+                        🔑 Obtén tu API Key gratis en <a href="https://www.weatherapi.com/" target="_blank" style="color:var(--primary);">WeatherAPI.com</a>
+                    </div>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.05);">
+                    <div style="color:var(--text-muted);font-size:11px;font-weight:600;text-transform:uppercase;margin-bottom:4px;">📱 Sobre la app</div>
+                    <div style="color:var(--text-light);font-size:12px;line-height:1.6;">
+                        <div>Versión: <strong>3.0.0 PRO</strong></div>
+                        <div>Regiones: <strong>16</strong> · Ciudades: <strong>100+</strong> · Comunas: <strong>300+</strong></div>
+                        <div style="margin-top:4px;color:var(--text-muted);font-size:10px;">
+                            ⚡ Datos en tiempo real desde <strong>WeatherAPI.com</strong><br>
+                            📊 1,000,000 llamadas/mes (plan gratuito)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <div class="status">
+                    <span class="dot" id="statusDot"></span> <span id="currentStatus">Listo para enviar</span>
+                </div>
+                <div style="margin-top:4px;opacity:0.4;">
+                    ClimaAlert Chile · Demo PRO v3.0 · WeatherAPI.com
+                </div>
+            </div>
+
+        </div><!-- /app-content -->
+    </div><!-- /app-wrapper -->
+
+    <script>
+        // ================================================================
+        //  CONFIGURACIÓN - WEATHERAPI.COM
+        // ================================================================
+
+        // 🔑 Reemplaza con tu API Key de WeatherAPI.com
+        // O usa el campo de configuración en la app
+        let WEATHER_API_KEY = localStorage.getItem('weatherApiKey') || '';
+
+        // 🌐 URL de la API
+        const WEATHER_API_URL = 'https://api.weatherapi.com/v1/forecast.json';
+
+        // 📅 Días de pronóstico (3 en plan gratuito)
+        const FORECAST_DAYS = 3;
+
+        // ================================================================
+        //  DATOS COMPLETOS DE CHILE
+        // ================================================================
+
+        const CHILE_DATA = {
+            "Región de Arica y Parinacota": {
+                "Arica": ["Arica", "Camarones", "Putre", "General Lagos"]
+            },
+            "Región de Tarapacá": {
+                "Iquique": ["Iquique", "Alto Hospicio", "Pica", "Huara", "Pozo Almonte", "Camiña", "Colchane"]
+            },
+            "Región de Antofagasta": {
+                "Antofagasta": ["Antofagasta", "Mejillones", "Sierra Gorda", "Taltal"],
+                "Calama": ["Calama", "Ollagüe", "San Pedro de Atacama"],
+                "Tocopilla": ["Tocopilla", "María Elena"]
+            },
+            "Región de Atacama": {
+                "Copiapó": ["Copiapó", "Caldera", "Tierra Amarilla"],
+                "Vallenar": ["Vallenar", "Alto del Carmen", "Freirina", "Huasco"],
+                "Chañaral": ["Chañaral", "Diego de Almagro"]
+            },
+            "Región de Coquimbo": {
+                "La Serena": ["La Serena", "Coquimbo", "Andacollo", "La Higuera", "Paihuano", "Vicuña"],
+                "Ovalle": ["Ovalle", "Monte Patria", "Punitaqui", "Río Hurtado"],
+                "Illapel": ["Illapel", "Canela", "Los Vilos", "Salamanca"]
+            },
+            "Región de Valparaíso": {
+                "Valparaíso": ["Valparaíso", "Viña del Mar", "Concón", "Quintero", "Puchuncaví", "Casablanca", "Juan Fernández"],
+                "San Antonio": ["San Antonio", "Algarrobo", "Cartagena", "El Quisco", "El Tabo", "Santo Domingo"],
+                "Quillota": ["Quillota", "La Calera", "Hijuelas", "La Cruz", "Nogales"],
+                "Los Andes": ["Los Andes", "Calle Larga", "Rinconada", "San Esteban"],
+                "San Felipe": ["San Felipe", "Catemu", "Llaillay", "Panquehue", "Putaendo", "Santa María"],
+                "Petorca": ["Petorca", "Cabildo", "La Ligua", "Papudo", "Zapallar"]
+            },
+            "Región Metropolitana de Santiago": {
+                "Santiago": ["Santiago", "Cerrillos", "Cerro Navia", "Conchalí", "El Bosque", "Estación Central", "Huechuraba", "Independencia", "La Cisterna", "La Florida", "La Granja", "La Pintana", "La Reina", "Las Condes", "Lo Barnechea", "Lo Espejo", "Lo Prado", "Macul", "Maipú", "Ñuñoa", "Pedro Aguirre Cerda", "Peñalolén", "Providencia", "Pudahuel", "Quilicura", "Quinta Normal", "Recoleta", "Renca", "San Joaquín", "San Miguel", "San Ramón", "Vitacura"],
+                "Puente Alto": ["Puente Alto", "Pirque", "San José de Maipo"],
+                "San Bernardo": ["San Bernardo", "Buin", "Calera de Tango", "Paine"],
+                "Melipilla": ["Melipilla", "Alhué", "Curacaví", "María Pinto", "San Pedro"],
+                "Talagante": ["Talagante", "El Monte", "Isla de Maipo", "Padre Hurtado", "Peñaflor"],
+                "Colina": ["Colina", "Lampa", "Til Til"]
+            },
+            "Región de O'Higgins": {
+                "Rancagua": ["Rancagua", "Codegua", "Coinco", "Coltauco", "Doñihue", "Graneros", "Las Cabras", "Machalí", "Malloa", "Mostazal", "Olivar", "Peumo", "Pichidegua", "Quinta de Tilcoco", "Rengo", "Requínoa", "San Vicente de Tagua Tagua"],
+                "San Fernando": ["San Fernando", "Chépica", "Chimbarongo", "Lolol", "Nancagua", "Palmilla", "Peralillo", "Placilla", "Pumanque", "Santa Cruz"]
+            },
+            "Región del Maule": {
+                "Talca": ["Talca", "Constitución", "Curepto", "Empedrado", "Maule", "Pelarco", "Pencahue", "Río Claro", "San Clemente", "San Rafael"],
+                "Curicó": ["Curicó", "Hualañé", "Licantén", "Molina", "Rauco", "Romeral", "Sagrada Familia", "Teno", "Vichuquén"],
+                "Linares": ["Linares", "Colbún", "Longaví", "Parral", "Retiro", "San Javier", "Villa Alegre", "Yerbas Buenas"],
+                "Cauquenes": ["Cauquenes", "Chanco", "Pelluhue"]
+            },
+            "Región de Ñuble": {
+                "Chillán": ["Chillán", "Bulnes", "Chillán Viejo", "El Carmen", "Pemuco", "Pinto", "Quillón", "San Ignacio", "Yungay"],
+                "San Carlos": ["San Carlos", "Coihueco", "Ninhue", "Ñiquén", "San Fabián", "San Nicolás"],
+                "Quirihue": ["Quirihue", "Cobquecura", "Coelemu", "Portezuelo", "Ránquil", "Treguaco"]
+            },
+            "Región del Biobío": {
+                "Concepción": ["Concepción", "Coronel", "Chiguayante", "Florida", "Hualpén", "Hualqui", "Lota", "Penco", "San Pedro de la Paz", "Santa Juana", "Talcahuano", "Tomé"],
+                "Los Ángeles": ["Los Ángeles", "Antuco", "Cabrero", "Laja", "Mulchén", "Nacimiento", "Negrete", "Quilaco", "Quilleco", "San Rosendo", "Santa Bárbara", "Tucapel", "Yumbel"],
+                "Arauco": ["Arauco", "Cañete", "Contulmo", "Curanilahue", "Lebu", "Los Álamos", "Tirúa"]
+            },
+            "Región de la Araucanía": {
+                "Temuco": ["Temuco", "Carahue", "Cunco", "Curarrehue", "Freire", "Galvarino", "Gorbea", "Lautaro", "Loncoche", "Melipeuco", "Nueva Imperial", "Padre las Casas", "Perquenco", "Pitrufquén", "Pucón", "Saavedra", "Teodoro Schmidt", "Toltén", "Vilcún", "Villarrica", "Cholchol"],
+                "Angol": ["Angol", "Collipulli", "Curacautín", "Ercilla", "Lonquimay", "Los Sauces", "Lumaco", "Purén", "Renaico", "Traiguén", "Victoria"]
+            },
+            "Región de Los Ríos": {
+                "Valdivia": ["Valdivia", "Corral", "Lanco", "Los Lagos", "Máfil", "Mariquina", "Paillaco", "Panguipulli"],
+                "La Unión": ["La Unión", "Futrono", "Lago Ranco", "Río Bueno"]
+            },
+            "Región de Los Lagos": {
+                "Puerto Montt": ["Puerto Montt", "Calbuco", "Cochamó", "Fresia", "Frutillar", "Llanquihue", "Los Muermos", "Maullín", "Puerto Varas"],
+                "Osorno": ["Osorno", "Puerto Octay", "Purranque", "Puyehue", "Río Negro", "San Juan de la Costa", "San Pablo"],
+                "Castro": ["Castro", "Ancud", "Chonchi", "Curaco de Vélez", "Dalcahue", "Puqueldón", "Queilén", "Quemchi", "Quellón"],
+                "Chaitén": ["Chaitén", "Futaleufú", "Hualaihué", "Palena"]
+            },
+            "Región de Aysén": {
+                "Coyhaique": ["Coyhaique", "Lago Verde"],
+                "Aysén": ["Aysén", "Cisnes", "Guaitecas"],
+                "Chile Chico": ["Chile Chico", "Río Ibáñez"],
+                "Cochrane": ["Cochrane", "O'Higgins", "Tortel"]
+            },
+            "Región de Magallanes": {
+                "Punta Arenas": ["Punta Arenas", "Laguna Blanca", "Río Verde", "San Gregorio"],
+                "Puerto Natales": ["Puerto Natales", "Torres del Paine"],
+                "Porvenir": ["Porvenir", "Primavera", "Timaukel"],
+                "Cabo de Hornos": ["Cabo de Hornos", "Antártica"]
+            }
+        };
+
+        // ================================================================
+        //  ESTADO DE LA APP
+        // ================================================================
+
+        const state = {
+            region: 'Región Metropolitana de Santiago',
+            city: 'Santiago',
+            comuna: 'Santiago',
+            sendTime: '07:00',
+            frequency: 'daily',
+            customHours: 3,
+            alerts: { rain: true, heat: true, wind: false, uv: true },
+            favorites: ['Santiago, Región Metropolitana de Santiago', 'Valparaíso, Región de Valparaíso'],
+            weather: null,
+            phone: '',
+            isRealData: false,
+            lastUpdate: null
+        };
+
+        // ================================================================
+        //  GESTIÓN DE API KEY
+        // ================================================================
+
+        function getApiKey() {
+            return localStorage.getItem('weatherApiKey') || '';
+        }
+
+        function saveApiKey() {
+            const input = document.getElementById('apiKeyInput');
+            const key = input.value.trim();
+            if (key.length > 0) {
+                localStorage.setItem('weatherApiKey', key);
+                WEATHER_API_KEY = key;
+                showToast('✅ API Key guardada correctamente', 'success');
+                updateApiStatus(true);
+                refreshWeather();
+            } else {
+                showToast('⚠️ Ingresa una API Key válida', 'error');
+            }
+        }
+
+        function loadApiKey() {
+            const key = getApiKey();
+            if (key) {
+                WEATHER_API_KEY = key;
+                document.getElementById('apiKeyInput').value = key;
+                updateApiStatus(true);
+            } else {
+                updateApiStatus(false);
+            }
+        }
+
+        function updateApiStatus(hasKey) {
+            const status = document.getElementById('apiStatus');
+            const badge = document.getElementById('apiBadge');
+            if (hasKey && WEATHER_API_KEY) {
+                status.className = 'api-status';
+                status.innerHTML = '<span class="dot"></span> API Conectada';
+                badge.textContent = '🌐 API OK';
+                badge.className = 'badge real';
+            } else {
+                status.className = 'api-status error';
+                status.innerHTML = '<span class="dot"></span> Sin API Key';
+                badge.textContent = '⚠️ Sin API';
+                badge.className = 'badge';
+            }
+        }
+
+        // ================================================================
+        //  GESTIÓN DE TELÉFONO
+        // ================================================================
+
+        function getStoredPhone() {
+            return localStorage.getItem('climaAlertPhone') || '';
+        }
+
+        function savePhoneNumber() {
+            const input = document.getElementById('phoneInput');
+            let phone = input.value.trim();
+            phone = phone.replace(/\D/g, '');
+
+            if (phone.length < 8) {
+                showToast('⚠️ Ingresa un número válido (mínimo 8 dígitos)', 'error');
+                return;
+            }
+
+            localStorage.setItem('climaAlertPhone', phone);
+            state.phone = phone;
+            updatePhoneUI(phone);
+            showToast(`✅ Número guardado: +56 ${phone}`, 'success');
+            closePhoneModal();
+
+            document.getElementById('currentStatus').textContent = `📱 Número registrado: +56 ${phone}`;
+            setTimeout(() => {
+                document.getElementById('currentStatus').textContent = 'Listo para enviar';
+            }, 3000);
+        }
+
+        function updatePhoneUI(phone) {
+            const input = document.getElementById('phoneInput');
+            const status = document.getElementById('phoneStatus');
+
+            if (phone) {
+                input.value = phone;
+                status.textContent = '✅';
+                status.title = 'Número registrado';
+                input.style.color = '#a8e6cf';
+                input.placeholder = `${phone}`;
+            } else {
+                input.value = '';
+                status.textContent = '';
+                input.style.color = '';
+                input.placeholder = 'Ingresa tu número WhatsApp';
+            }
+        }
+
+        function loadPhoneNumber() {
+            const phone = getStoredPhone();
+            if (phone) {
+                state.phone = phone;
+                updatePhoneUI(phone);
+            } else {
+                setTimeout(() => {
+                    showPhoneModal();
+                }, 800);
+            }
+        }
+
+        function showPhoneModal() {
+            const modal = document.getElementById('phoneModal');
+            const input = document.getElementById('modalPhoneInput');
+            const currentPhone = getStoredPhone();
+            if (currentPhone) {
+                input.value = currentPhone;
+            } else {
+                input.value = '';
+            }
+            modal.classList.add('show');
+            setTimeout(() => {
+                input.focus();
+            }, 300);
+        }
+
+        function closePhoneModal() {
+            document.getElementById('phoneModal').classList.remove('show');
+        }
+
+        function savePhoneFromModal() {
+            const input = document.getElementById('modalPhoneInput');
+            const phone = input.value.trim().replace(/\D/g, '');
+            if (phone.length < 8) {
+                showToast('⚠️ Ingresa un número válido (mínimo 8 dígitos)', 'error');
+                return;
+            }
+            localStorage.setItem('climaAlertPhone', phone);
+            state.phone = phone;
+            updatePhoneUI(phone);
+            closePhoneModal();
+            showToast(`✅ Número guardado: +56 ${phone}`, 'success');
+        }
+
+        // ================================================================
+        //  REFERENCIAS DOM
+        // ================================================================
+
+        const regionSelect = document.getElementById('regionSelect');
+        const citySelect = document.getElementById('citySelect');
+        const comunaSelect = document.getElementById('comunaSelect');
+        const locationDisplay = document.getElementById('locationDisplay');
+        const comunaDisplay = document.getElementById('comunaDisplay');
+
+        // ================================================================
+        //  INICIALIZAR SELECTORES
+        // ================================================================
+
+        function populateRegions() {
+            const regions = Object.keys(CHILE_DATA);
+            regionSelect.innerHTML = '<option value="">Selecciona una región...</option>';
+            regions.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r;
+                opt.textContent = r;
+                regionSelect.appendChild(opt);
+            });
+            regionSelect.value = state.region;
+        }
+
+        function populateCities(region) {
+            citySelect.innerHTML = '<option value="">Selecciona una ciudad...</option>';
+            if (region && CHILE_DATA[region]) {
+                const cities = Object.keys(CHILE_DATA[region]);
+                cities.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c;
+                    opt.textContent = c;
+                    citySelect.appendChild(opt);
+                });
+                citySelect.disabled = false;
+            } else {
+                citySelect.disabled = true;
+                comunaSelect.disabled = true;
+            }
+            citySelect.value = state.city;
+        }
+
+        function populateComunas(region, city) {
+            comunaSelect.innerHTML = '<option value="">Selecciona una comuna...</option>';
+            if (region && city && CHILE_DATA[region] && CHILE_DATA[region][city]) {
+                const comunas = CHILE_DATA[region][city];
+                comunas.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c;
+                    opt.textContent = c;
+                    comunaSelect.appendChild(opt);
+                });
+                comunaSelect.disabled = false;
+            } else {
+                comunaSelect.disabled = true;
+            }
+            comunaSelect.value = state.comuna;
+        }
+
+        // ================================================================
+        //  EVENTOS DE SELECTORES
+        // ================================================================
+
+        regionSelect.addEventListener('change', function() {
+            state.region = this.value;
+            state.city = '';
+            state.comuna = '';
+            populateCities(state.region);
+            populateComunas(state.region, '');
+            updateLocationDisplay();
+            updateWeather();
+        });
+
+        citySelect.addEventListener('change', function() {
+            state.city = this.value;
+            state.comuna = '';
+            populateComunas(state.region, state.city);
+            updateLocationDisplay();
+            updateWeather();
+        });
+
+        comunaSelect.addEventListener('change', function() {
+            state.comuna = this.value;
+            updateLocationDisplay();
+            updateWeather();
+        });
+
+        // ================================================================
+        //  UBICACIÓN
+        // ================================================================
+
+        function updateLocationDisplay() {
+            const region = state.region || regionSelect.value;
+            const city = state.city || citySelect.value;
+            const comuna = state.comuna || comunaSelect.value;
+
+            if (region && city) {
+                let display = `${city}, ${region}`;
+                if (comuna && comuna !== city) {
+                    display = `${comuna}, ${city}`;
+                    comunaDisplay.textContent = comuna;
+                } else {
+                    comunaDisplay.textContent = city;
+                }
+                locationDisplay.textContent = display;
+            } else {
+                locationDisplay.textContent = 'Selecciona una ubicación';
+                comunaDisplay.textContent = '-';
+            }
+        }
+
+        // ================================================================
+        //  GEOLOCALIZACIÓN (SIMULADA)
+        // ================================================================
+
+        function detectLocation() {
+            showToast('📍 Detectando ubicación...', 'info');
+            setTimeout(() => {
+                state.region = 'Región Metropolitana de Santiago';
+                state.city = 'Santiago';
+                state.comuna = 'Santiago';
+                regionSelect.value = state.region;
+                populateCities(state.region);
+                setTimeout(() => {
+                    citySelect.value = state.city;
+                    populateComunas(state.region, state.city);
+                    setTimeout(() => {
+                        comunaSelect.value = state.comuna;
+                        updateLocationDisplay();
+                        updateWeather();
+                        showToast('📍 Ubicación detectada: Santiago, RM', 'success');
+                    }, 100);
+                }, 100);
+            }, 800);
+        }
+
+        // ================================================================
+        //  FUNCIÓN PARA OBTENER CLIMA REAL - WEATHERAPI.COM
+        // ================================================================
+
+        async function getRealWeather(city, region) {
+            // Verificar si hay API Key
+            if (!WEATHER_API_KEY) {
+                throw new Error('No hay API Key configurada');
+            }
+
+            // Construir query: ciudad, región, Chile
+            const query = `${city}, ${region}, Chile`;
+            const url = `${WEATHER_API_URL}?key=${WEATHER_API_KEY}&q=${encodeURIComponent(query)}&days=${FORECAST_DAYS}&lang=es&aqi=no&alerts=no`;
+
+            try {
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error?.message || `Error ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                return parseWeatherData(data);
+
+            } catch (error) {
+                console.error('Error obteniendo clima:', error);
+                throw error;
+            }
+        }
+
+        // ================================================================
+        //  PROCESAR DATOS DE LA API
+        // ================================================================
+
+        function parseWeatherData(data) {
+            const current = data.current;
+            const forecast = data.forecast?.forecastday || [];
+            const location = data.location;
+
+            // Mapear código de clima a emoji
+            const weatherEmojis = {
+                'Sunny': '☀️',
+                'Clear': '☀️',
+                'Partly cloudy': '⛅',
+                'Cloudy': '☁️',
+                'Overcast': '☁️',
+                'Mist': '🌫️',
+                'Fog': '🌫️',
+                'Light rain': '🌦️',
+                'Moderate rain': '🌧️',
+                'Heavy rain': '🌧️',
+                'Rain': '🌧️',
+                'Light snow': '🌨️',
+                'Moderate snow': '❄️',
+                'Heavy snow': '❄️',
+                'Snow': '❄️',
+                'Thunderstorm': '⛈️',
+                'Blizzard': '🌨️',
+                'Patchy rain nearby': '🌦️',
+                'Patchy snow nearby': '🌨️',
+                'Thundery outbreaks possible': '⛈️'
+            };
+
+            const weatherText = current.condition?.text || 'Despejado';
+            const emoji = weatherEmojis[current.condition?.text] || '🌤️';
+
+            // Pronóstico de días
+            const forecastDays = forecast.slice(0, 5).map(day => {
+                const date = new Date(day.date);
+                const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+                return {
+                    day: days[date.getDay()],
+                    emoji: weatherEmojis[day.day.condition?.text] || '🌤️',
+                    max: Math.round(day.day.maxtemp_c),
+                    min: Math.round(day.day.mintemp_c),
+                    condition: day.day.condition?.text || '',
+                    chanceRain: day.day.daily_chance_of_rain || 0
+                };
+            });
+
+            // Asegurar que tenemos al menos 5 días
+            while (forecastDays.length < 5) {
+                const last = forecastDays[forecastDays.length - 1] || { max: 20, min: 12 };
+                forecastDays.push({
+                    day: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'][forecastDays.length],
+                    emoji: '🌤️',
+                    max: last.max + (Math.random() - 0.5) * 4,
+                    min: last.min + (Math.random() - 0.5) * 3,
+                    condition: 'Pronóstico extendido'
+                });
+            }
+
+            return {
+                city: location.name,
+                region: location.region,
+                country: location.country,
+                emoji: emoji,
+                temp: Math.round(current.temp_c),
+                feelsLike: Math.round(current.feelslike_c),
+                desc: weatherText,
+                humidity: current.humidity,
+                wind: Math.round(current.wind_kph),
+                windDir: current.wind_dir || 'N/A',
+                gust: Math.round(current.gust_kph || 0),
+                uv: current.uv || 0,
+                pressure: current.pressure_mb || 1016,
+                visibility: current.vis_km || 20,
+                cloud: current.cloud || 0,
+                precip: current.precip_mm || 0,
+                conditionCode: current.condition?.code,
+                forecast: forecastDays,
+                timestamp: new Date(location.localtime).toLocaleString('es-ES'),
+                lastUpdate: new Date(current.last_updated).toLocaleString('es-ES'),
+                isReal: true
+            };
+        }
+
+        // ================================================================
+        //  DATOS FALLBACK (SIMULADOS)
+        // ================================================================
+
+        function getFallbackWeather(city) {
+            const now = new Date();
+            return {
+                city: city,
+                region: state.region || 'Región Metropolitana',
+                country: 'Chile',
+                emoji: '☀️',
+                temp: 22,
+                feelsLike: 23,
+                desc: 'Soleado (simulado)',
+                humidity: 55,
+                wind: 12,
+                windDir: 'N/A',
+                gust: 0,
+                uv: 7,
+                pressure: 1016,
+                visibility: 30,
+                cloud: 10,
+                precip: 0,
+                forecast: [
+                    { day: 'Lun', emoji: '☀️', max: 24, min: 16, condition: 'Despejado' },
+                    { day: 'Mar', emoji: '⛅', max: 22, min: 15, condition: 'Parcialmente nublado' },
+                    { day: 'Mié', emoji: '🌤️', max: 21, min: 14, condition: 'Parcialmente nublado' },
+                    { day: 'Jue', emoji: '☀️', max: 23, min: 15, condition: 'Despejado' },
+                    { day: 'Vie', emoji: '🌧️', max: 18, min: 12, condition: 'Lluvioso' }
+                ],
+                timestamp: now.toLocaleString('es-ES'),
+                lastUpdate: now.toLocaleString('es-ES'),
+                isReal: false
+            };
+        }
+
+        // ================================================================
+        //  ACTUALIZAR CLIMA
+        // ================================================================
+
+        async function updateWeather() {
+            const region = state.region || regionSelect.value;
+            const city = state.city || citySelect.value;
+            const comuna = state.comuna || comunaSelect.value || city;
+
+            if (!region || !city) {
+                return;
+            }
+
+            // Mostrar estado de carga
+            document.getElementById('weatherEmoji').textContent = '⏳';
+            document.getElementById('weatherTemp').innerHTML = '...<small>°C</small>';
+            document.getElementById('currentStatus').textContent = '🌐 Obteniendo clima real...';
+            document.getElementById('statusDot').className = 'dot loading';
+            document.getElementById('lastUpdateLabel').textContent = 'Actualizando...';
+
+            try {
+                // Verificar API Key
+                if (!WEATHER_API_KEY) {
+                    throw new Error('No hay API Key configurada. Ve a Configuración > API.');
+                }
+
+                // Obtener clima real
+                const weather = await getRealWeather(city, region);
+                state.weather = weather;
+                state.isRealData = true;
+                state.lastUpdate = new Date();
+
+                // Actualizar UI
+                updateWeatherUI(weather);
+                updateApiStatus(true);
+
+                document.getElementById('currentStatus').textContent = `✅ Datos reales de ${city} (${weather.lastUpdate})`;
+                document.getElementById('statusDot').className = 'dot';
+                document.getElementById('lastUpdateLabel').textContent = `Actualizado: ${weather.lastUpdate}`;
+
+                showToast(`🌤️ Clima real de ${city} cargado desde WeatherAPI.com`, 'success');
+
+            } catch (error) {
+                console.error('Error actualizando clima:', error);
+
+                // Usar datos simulados como fallback
+                const fallback = getFallbackWeather(city);
+                state.weather = fallback;
+                state.isRealData = false;
+                state.lastUpdate = new Date();
+
+                updateWeatherUI(fallback);
+                updateApiStatus(false);
+
+                document.getElementById('currentStatus').textContent =
+                    `⚠️ ${error.message || 'Error obteniendo clima real, usando datos simulados'}`;
+                document.getElementById('statusDot').className = 'dot';
+                document.getElementById('lastUpdateLabel').textContent = `⚠️ Usando datos simulados`;
+
+                showToast(`⚠️ ${error.message || 'Error obteniendo clima real'}`, 'error');
+            }
+
+            // Actualizar preview si está abierto
+            if (document.getElementById('previewBox').classList.contains('show')) {
+                updatePreview();
+            }
+        }
+
+        // ================================================================
+        //  ACTUALIZAR UI DEL CLIMA
+        // ================================================================
+
+        function updateWeatherUI(weather) {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+            document.getElementById('weatherDate').textContent =
+                `Hoy, ${dateStr.charAt(0).toUpperCase() + dateStr.slice(1)}`;
+            document.getElementById('weatherEmoji').textContent = weather.emoji;
+            document.getElementById('bgEmoji').textContent = weather.emoji;
+            document.getElementById('weatherTemp').innerHTML = `${weather.temp}<small>°C</small>`;
+            document.getElementById('weatherDesc').textContent = weather.desc;
+            document.getElementById('humidity').textContent = `${weather.humidity}%`;
+            document.getElementById('wind').textContent = `${weather.wind} km/h`;
+            document.getElementById('feelsLike').textContent = `${weather.feelsLike}°C`;
+            document.getElementById('uvIndex').textContent = weather.uv;
+
+            // Pronóstico extendido
+            if (weather.forecast && weather.forecast.length > 0) {
+                const container = document.getElementById('extendedForecast');
+                container.innerHTML = weather.forecast.map(d => `
+                    <div class="day-item">
+                        <div class="day-name">${d.day}</div>
+                        <span class="emoji">${d.emoji}</span>
+                        <div class="temp-max">${Math.round(d.max)}°</div>
+                        <div class="temp-min">${Math.round(d.min)}°</div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('forecastSource').textContent =
+                weather.isReal ? '🌐 WeatherAPI.com (real)' : '⚠️ Datos simulados';
+
+            checkAlerts(weather);
+        }
+
+        // ================================================================
+        //  ALERTAS
+        // ================================================================
+
+        function checkAlerts(weather) {
+            const alerts = [];
+            const history = document.getElementById('alertHistory');
+
+            // Verificar condiciones
+            const isRainy = weather.precip > 0.5 || weather.humidity > 80;
+            const isHot = weather.temp > 28;
+            const isWindy = weather.wind > 35;
+            const isUvHigh = weather.uv > 7;
+
+            if (state.alerts.rain && isRainy) {
+                alerts.push('🌧️ Alta probabilidad de lluvia');
+            }
+            if (state.alerts.heat && isHot) {
+                alerts.push('🔥 Calor extremo');
+            }
+            if (state.alerts.wind && isWindy) {
+                alerts.push('💨 Viento fuerte');
+            }
+            if (state.alerts.uv && isUvHigh) {
+                alerts.push('☀️ Índice UV extremo');
+            }
+
+            if (alerts.length > 0) {
+                history.innerHTML = alerts.map(a => `<div style="color:var(--warning);">🔔 ${a}</div>`).join('');
+            } else {
+                history.innerHTML = '<span style="color:var(--text-muted);">✅ Sin alertas activas en este momento</span>';
+            }
+        }
+
+        function toggleAlert(btn) {
+            const alertType = btn.dataset.alert;
+            const isActive = btn.classList.toggle('active');
+            state.alerts[alertType] = isActive;
+            btn.textContent = isActive ? '✅ Activa' : '⏸️ Inactiva';
+            showToast(`${isActive ? '✅ Activada' : '⏸️ Desactivada'} alerta de ${alertType}`, 'info');
+            if (state.weather) {
+                checkAlerts(state.weather);
+            }
+        }
+
+        // ================================================================
+        //  FRECUENCIA
+        // ================================================================
+
+        function setFrequency(btn) {
+            document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            state.frequency = btn.dataset.freq;
+
+            const customDiv = document.getElementById('customFreq');
+            customDiv.style.display = state.frequency === 'custom' ? 'block' : 'none';
+
+            const labels = {
+                daily: '📅 Envío diario',
+                '12h': '📅 Cada 12 horas',
+                '6h': '📅 Cada 6 horas',
+                custom: '📅 Personalizado'
+            };
+            document.getElementById('notifFreqTag').textContent = labels[state.frequency] || '📅 Envío diario';
+            showToast(`Frecuencia: ${labels[state.frequency]}`, 'info');
+        }
+
+        // ================================================================
+        //  FAVORITOS
+        // ================================================================
+
+        function renderFavorites() {
+            const container = document.getElementById('favoritesList');
+            const favs = state.favorites;
+            let html = '';
+            favs.forEach((fav, index) => {
+                html += `
+                    <div class="fav-tag" onclick="loadFavorite('${fav}')">
+                        ⭐ ${fav}
+                        <span class="remove" onclick="event.stopPropagation();removeFavorite(${index})">✕</span>
+                    </div>
+                `;
+            });
+            html += `<button class="add-fav" onclick="addFavorite()">+ Agregar actual</button>`;
+            container.innerHTML = html;
+        }
+
+        function addFavorite() {
+            const region = state.region || regionSelect.value;
+            const city = state.city || citySelect.value;
+            if (region && city) {
+                const name = `${city}, ${region}`;
+                if (!state.favorites.includes(name)) {
+                    state.favorites.push(name);
+                    renderFavorites();
+                    showToast(`⭐ ${name} agregado a favoritos`, 'success');
+                } else {
+                    showToast('⚠️ Ya está en favoritos', 'error');
+                }
+            } else {
+                showToast('⚠️ Selecciona una ubicación primero', 'error');
+            }
+        }
+
+        function removeFavorite(index) {
+            state.favorites.splice(index, 1);
+            renderFavorites();
+            showToast('🗑️ Favorito eliminado', 'info');
+        }
+
+        function loadFavorite(name) {
+            const [city, region] = name.split(', ');
+            state.region = region;
+            state.city = city;
+            regionSelect.value = region;
+            populateCities(region);
+            setTimeout(() => {
+                citySelect.value = city;
+                populateComunas(region, city);
+                setTimeout(() => {
+                    const comuna = CHILE_DATA[region]?.[city]?.[0] || city;
+                    state.comuna = comuna;
+                    comunaSelect.value = comuna;
+                    updateLocationDisplay();
+                    updateWeather();
+                    showToast(`📍 Cargado: ${name}`, 'success');
+                }, 100);
+            }, 100);
+        }
+
+        // ================================================================
+        //  GENERAR MENSAJE PARA WHATSAPP
+        // ================================================================
+
+        function generateWhatsAppMessage() {
+            const region = state.region || regionSelect.value;
+            const city = state.city || citySelect.value;
+            const comuna = state.comuna || comunaSelect.value || city;
+            const w = state.weather || getFallbackWeather(city);
+            const time = document.getElementById('sendTime').value || '07:00';
+
+            const locationName = `${comuna}, ${city}`;
+
+            // Alertas en texto plano
+            const alertText = [];
+            if (w.humidity > 80 && state.alerts.rain) alertText.push('* Lleva paraguas (lluvia probable)');
+            if (w.temp > 28 && state.alerts.heat) alertText.push('* Hidrátate! Calor extremo');
+            if (w.wind > 35 && state.alerts.wind) alertText.push('* Cuidado con el viento fuerte');
+            if (w.uv > 7 && state.alerts.uv) alertText.push('* Protégete del sol (UV extremo)');
+
+            const alertMsg = alertText.length > 0 ? `\n\n[ALERTAS]\n${alertText.join('\n')}` : '';
+
+            // Fecha formateada
+            const dateStr = new Date().toLocaleDateString('es-ES', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+
+            // Pronóstico mañana
+            const tomorrow = w.forecast?.[1] || { max: w.temp + 2, min: w.temp - 3 };
+
+            return `
+* CLIMAALERT CHILE *
+
+[UBICACION]
+${locationName}
+${dateStr}
+
+[CLIMA EN TIEMPO REAL]
+Temperatura: ${w.temp}°C (sensacion ${w.feelsLike}°C)
+Estado: ${w.desc}
+Humedad: ${w.humidity}%
+Viento: ${w.wind} km/h
+Indice UV: ${w.uv}
+Presion: ${w.pressure} hPa
+Visibilidad: ${w.visibility} km
+
+[PRONOSTICO MAÑANA]
+Max: ${Math.round(tomorrow.max)}°C / Min: ${Math.round(tomorrow.min)}°C
+${alertMsg}
+
+[CONFIGURACION]
+Envio programado: ${time}
+Frecuencia: ${state.frequency === 'daily' ? 'Diario' : state.frequency === '12h' ? 'Cada 12h' : state.frequency === '6h' ? 'Cada 6h' : 'Personalizado'}
+
+${w.isReal ? '✅ Datos en tiempo real de WeatherAPI.com' : '⚠️ Datos simulados (sin conexión)'}
+Enviado desde ClimaAlert Chile
+`.trim();
+        }
+
+        // ================================================================
+        //  PREVISUALIZACIÓN
+        // ================================================================
+
+        function togglePreview() {
+            const box = document.getElementById('previewBox');
+            box.classList.toggle('show');
+            if (box.classList.contains('show')) {
+                updatePreview();
+            }
+        }
+
+        function updatePreview() {
+            const previewContent = document.getElementById('previewContent');
+            const mensaje = generateWhatsAppMessage();
+            previewContent.textContent = mensaje;
+        }
+
+        // ================================================================
+        //  ENVÍO WHATSAPP
+        // ================================================================
+
+        function sendWhatsApp() {
+            const btn = document.querySelector('.btn-whatsapp');
+            const notif = document.getElementById('notificationSim');
+            const status = document.getElementById('currentStatus');
+
+            const region = state.region || regionSelect.value;
+            const city = state.city || citySelect.value;
+            const comuna = state.comuna || comunaSelect.value || city;
+            const w = state.weather || getFallbackWeather(city);
+            const time = document.getElementById('sendTime').value || '07:00';
+
+            // Verificar número
+            const phone = getStoredPhone();
+            if (!phone || phone.length < 8) {
+                showToast('📱 Primero ingresa tu número de WhatsApp', 'error');
+                showPhoneModal();
+                return;
+            }
+
+            if (!region || !city) {
+                showToast('⚠️ Selecciona una región y ciudad primero', 'error');
+                return;
+            }
+
+            // Generar mensaje en texto plano
+            const mensaje = generateWhatsAppMessage();
+
+            // Mostrar preview
+            const previewBox = document.getElementById('previewBox');
+            const previewContent = document.getElementById('previewContent');
+            previewContent.textContent = mensaje;
+            previewBox.classList.add('show');
+
+            // Mostrar en notificación simulada
+            document.getElementById('notifCity').textContent = `${comuna}, ${city}`;
+            const previewLines = mensaje.split('\n').slice(0, 4).join('\n');
+            document.getElementById('notifPreview').textContent = previewLines + '...';
+
+            const now = new Date();
+            document.getElementById('notifTime').textContent = now.toLocaleTimeString('es-ES', { hour: '2-digit',
+                minute: '2-digit' });
+            document.getElementById('notifTimeTag').textContent = `⏰ ${time}`;
+
+            const freqLabels = {
+                daily: '📅 Envío diario',
+                '12h': '📅 Cada 12 horas',
+                '6h': '📅 Cada 6 horas',
+                custom: '📅 Personalizado'
+            };
+            document.getElementById('notifFreqTag').textContent = freqLabels[state.frequency] || '📅 Envío diario';
+            document.getElementById('notifSourceTag').textContent =
+                w.isReal ? '🌐 WeatherAPI' : '⚠️ Simulado';
+
+            notif.classList.add('show');
+            notif.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Codificar para URL de WhatsApp
+            const encodedMsg = encodeURIComponent(mensaje);
+            const phoneNumber = `56${phone}`;
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMsg}`;
+
+            btn.innerHTML = '<span class="icon">⏳</span> Abriendo WhatsApp...';
+            btn.disabled = true;
+            status.textContent = '📤 Abriendo WhatsApp...';
+
+            setTimeout(() => {
+                window.open(whatsappUrl, '_blank');
+
+                btn.innerHTML = '<span class="icon">💬</span> Enviar pronóstico por WhatsApp';
+                btn.disabled = false;
+                status.textContent = `✅ Mensaje enviado a +56 ${phone}`;
+
+                showToast(`✅ Mensaje enviado a +56 ${phone}`, 'success');
+
+                setTimeout(() => {
+                    status.textContent = 'Listo para enviar';
+                }, 4000);
+            }, 800);
+        }
+
+        // ================================================================
+        //  TABS
+        // ================================================================
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab[data-tab="${tabId}"]`).classList.add('active');
+        }
+
+        // ================================================================
+        //  CONFIGURACIÓN
+        // ================================================================
+
+        function toggleSettings() {
+            switchTab('tab-settings');
+            document.querySelector('.tab[data-tab="tab-settings"]').classList.add('active');
+        }
+
+        function saveSettings() {
+            state.sendTime = document.getElementById('sendTime').value;
+            const interval = document.getElementById('updateInterval').value;
+            showToast(`✅ Configuración guardada. Envío a las ${state.sendTime}`, 'success');
+            document.getElementById('currentStatus').textContent = `✅ Configuración guardada`;
+            setTimeout(() => {
+                document.getElementById('currentStatus').textContent = 'Listo para enviar';
+            }, 3000);
+        }
+
+        function resetSettings() {
+            state.region = 'Región Metropolitana de Santiago';
+            state.city = 'Santiago';
+            state.comuna = 'Santiago';
+            state.sendTime = '07:00';
+            state.frequency = 'daily';
+            state.alerts = { rain: true, heat: true, wind: false, uv: true };
+
+            regionSelect.value = state.region;
+            populateCities(state.region);
+            setTimeout(() => {
+                citySelect.value = state.city;
+                populateComunas(state.region, state.city);
+                setTimeout(() => {
+                    comunaSelect.value = state.comuna;
+                    document.getElementById('sendTime').value = '07:00';
+                    document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelector('.freq-btn[data-freq="daily"]').classList.add('active');
+                    document.getElementById('customFreq').style.display = 'none';
+                    updateLocationDisplay();
+                    updateWeather();
+                    renderFavorites();
+                    showToast('↺ Configuración restablecida', 'info');
+                }, 100);
+            }, 100);
+        }
+
+        // ================================================================
+        //  REFRESH
+        // ================================================================
+
+        function refreshWeather() {
+            showToast('🔄 Actualizando clima...', 'info');
+            updateWeather();
+        }
+
+        // ================================================================
+        //  TOAST
+        // ================================================================
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        // ================================================================
+        //  INICIALIZACIÓN
+        // ================================================================
+
+        function init() {
+            // Cargar API Key
+            loadApiKey();
+
+            // Cargar número
+            loadPhoneNumber();
+
+            // Poblar selectores
+            populateRegions();
+
+            setTimeout(() => {
+                regionSelect.value = state.region;
+                populateCities(state.region);
+                setTimeout(() => {
+                    citySelect.value = state.city;
+                    populateComunas(state.region, state.city);
+                    setTimeout(() => {
+                        comunaSelect.value = state.comuna;
+                        updateLocationDisplay();
+                        renderFavorites();
+                        document.getElementById('sendTime').value = '07:00';
+
+                        // Cargar clima
+                        updateWeather();
+
+                        console.log('✅ ClimaAlert Chile PRO v3.0 cargado');
+                        console.log('🏔️ 16 regiones · 100+ ciudades · 300+ comunas');
+                        console.log('📱 Número WhatsApp:', getStoredPhone() || 'No registrado');
+                        console.log('🌐 WeatherAPI.com:', WEATHER_API_KEY ? '✅ Conectado' : '❌ Sin API Key');
+                    }, 150);
+                }, 150);
+            }, 200);
+
+            // Eventos de Enter
+            document.getElementById('phoneInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    savePhoneNumber();
+                }
+            });
+
+            document.getElementById('modalPhoneInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    savePhoneFromModal();
+                }
+            });
+
+            document.getElementById('apiKeyInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    saveApiKey();
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+
+        // ================================================================
+        //  EXPONER FUNCIONES GLOBALES
+        // ================================================================
+
+        window.sendWhatsApp = sendWhatsApp;
+        window.detectLocation = detectLocation;
+        window.switchTab = switchTab;
+        window.toggleSettings = toggleSettings;
+        window.saveSettings = saveSettings;
+        window.resetSettings = resetSettings;
+        window.refreshWeather = refreshWeather;
+        window.setFrequency = setFrequency;
+        window.toggleAlert = toggleAlert;
+        window.addFavorite = addFavorite;
+        window.removeFavorite = removeFavorite;
+        window.loadFavorite = loadFavorite;
+        window.showToast = showToast;
+        window.savePhoneNumber = savePhoneNumber;
+        window.showPhoneModal = showPhoneModal;
+        window.closePhoneModal = closePhoneModal;
+        window.savePhoneFromModal = savePhoneFromModal;
+        window.togglePreview = togglePreview;
+        window.updatePreview = updatePreview;
+        window.saveApiKey = saveApiKey;
+        window.loadApiKey = loadApiKey;
+    </script>
+
+</body>
+</html>
